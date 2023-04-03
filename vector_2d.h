@@ -10,7 +10,9 @@ class Vector2D {
 public:
     Vector2D() = default;
     explicit Vector2D(size_t m, size_t n) : cols_(m), rows_(n) {
-
+        for (size_t i = 0; i < cols_; ++i) {
+            vector2d_.reserve(rows_);
+        }
     }
 
     Vector2D(size_t m, size_t n, Type value) : cols_(m), rows_(n) {
@@ -79,13 +81,34 @@ public:
         return *this;
     }
 
-    Vector2D & operator|(const Vector2D & rhs) {
+    Vector2D operator|(const Vector2D & rhs) {
+        Vector2D tmp(*this);
         for (size_t i = 0; i < cols_ || i < rhs.cols_; ++i) {
-            vector2d_[i].insert(vector2d_[i].end(),
-                             std::make_move_iterator(rhs.vector2d_[i].begin()),
-                             std::make_move_iterator(rhs.vector2d_[i].end()));
+            tmp.vector2d_[i].insert(tmp.vector2d_[i].end(),
+                                    rhs.vector2d_[i].begin(),
+                                    rhs.vector2d_[i].end());
         }
-        cols_ += rhs.cols_;
+        tmp.cols_ += rhs.cols_;
+
+        return tmp;
+    }
+
+    Vector2D operator+(const Vector2D & rhs) {
+        if (rows_ != rhs.rows_ || cols_ != rhs.cols_) {
+            throw std::invalid_argument("not same rows or cols");
+        }
+        Vector2D tmp(cols_, rows_, 0);
+        for (size_t i = 0; i < cols_; ++i) {
+            for (size_t j = 0; j < rows_; ++j) {
+                tmp.vector2d_[i][j] = vector2d_[i][j] + rhs.vector2d_[i][j];
+            }
+        }
+        return tmp;
+    }
+
+    Vector2D & operator+=(const Vector2D & rhs) {
+        Vector2D tmp = *this + rhs;
+        swap(tmp);
         return *this;
     }
 

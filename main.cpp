@@ -2,13 +2,13 @@
 #include <algorithm>
 
 #include "vector_2d.h"
-#include "array2d_umap.h"
+//#include "array2d_umap.h"
 
-void TestArrayUmap() {
-    Array2D_umap<int> arru_(3, 3, 1);
-    Array2D_umap<int> arru_2(arru_);
-    Array2D_umap<int> arru_3 = arru_2;
-}
+//void TestArrayUmap() {
+//    Array2D_umap<int> arru_(3, 3, 1);
+//    Array2D_umap<int> arru_2(arru_);
+//    Array2D_umap<int> arru_3 = arru_2;
+//}
 
 template <typename Type>
 void print_arr(Vector2D<Type> & arr_) {
@@ -35,8 +35,16 @@ void Test2Dvector() {
 
 
     std::cout << "concatenate" << std::endl;
-    arr3 | arr2;
-    std::cout << arr3.GetRows_size() << " " << arr3.GetCols_size() << std::endl;
+    auto arr4 = arr3 | arr2;
+    std::cout << arr4.GetRows_size() << " " << arr4.GetCols_size() << std::endl;
+    print_arr(arr4);
+    print_arr(arr3);
+    std::cout << std::endl;
+
+    std::cout << "oprator + " << std::endl;
+    auto arr5 = arr3 + arr_;
+    print_arr(arr5);
+    arr3 += arr_;
     print_arr(arr3);
     std::cout << std::endl;
 
