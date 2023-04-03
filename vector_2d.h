@@ -8,16 +8,6 @@
 template <typename Type>
 class Vector2D {
 public:
-    using cols_it = std::vector< std::vector<Type> >::iterator;
-
-    cols_it begin() {
-        return vector2d_.begin();
-    }
-
-    cols_it end() {
-        return vector2d_.end();
-    }
-
     Vector2D() = default;
     explicit Vector2D(size_t m, size_t n) : cols_(m), rows_(n) {
 
@@ -99,8 +89,6 @@ public:
         return *this;
     }
 
-
-
     std::vector<Type> GetColumn(size_t index) const {
         if (!isValidCol(index)) {
             throw std::invalid_argument("out of range cols");
@@ -128,7 +116,21 @@ public:
         return cols_;
     }
 
+    using cols_it = std::vector< std::vector<Type> >::iterator;
+
+    cols_it begin() {
+        return vector2d_.begin();
+    }
+
+    cols_it end() {
+        return vector2d_.end();
+    }
+
 private:
+
+    std::vector<std::vector<Type>> vector2d_;
+    size_t cols_ = 0;
+    size_t rows_ = 0;
 
     bool isValidRow(const size_t index) const {
         return index < rows_;
@@ -154,9 +156,6 @@ private:
         std::swap(rows_, other.rows_);
     }
 
-    std::vector<std::vector<Type>> vector2d_;
-    size_t cols_ = 0;
-    size_t rows_ = 0;
 };
 
 
