@@ -1,9 +1,14 @@
 #include <iostream>
 #include "vector_2d.h"
+#include "array2d_umap.h"
 
+void TestArrayUmap() {
+    Array2D_umap<int> arru_(3, 3, 1);
+    Array2D_umap<int> arru_2(arru_);
+    Array2D_umap<int> arru_3 = arru_2;
+}
 
-
-int Test2Dvector() {
+void Test2Dvector() {
     Vector2D<int> arr_(10, 10, 0);
     std::cout << arr_.GetRows_size() << " " << arr_.GetCols_size() << std::endl;
 
@@ -23,11 +28,6 @@ int Test2Dvector() {
 
     std::cout << arr3.GetColumn(7).size() << " " << arr3.GetRow(3).size() << std::endl;
 
-    Array2D_umap<int> arru_(3, 3, 1);
-    Array2D_umap<int> arru_2(arru_);
-    Array2D_umap<int> arru_3 = arru_2;
-
-    return 0;
 }
 
 int main() {
