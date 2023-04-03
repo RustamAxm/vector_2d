@@ -9,7 +9,7 @@ void TestArrayUmap() {
 }
 
 void Test2Dvector() {
-    Vector2D<int> arr_(10, 10, 0);
+    Vector2D<int> arr_(3, 3, 0);
     std::cout << arr_.GetRows_size() << " " << arr_.GetCols_size() << std::endl;
 
     Vector2D<int> arr2(arr_);
@@ -21,12 +21,20 @@ void Test2Dvector() {
     arr3 | arr2;
     std::cout << arr3.GetRows_size() << " " << arr3.GetCols_size() << std::endl;
 
-    std::cout << arr3[5][5] << " " << arr_[5][5] << std::endl;
-    arr3[5][5] = 5;
-    arr_[5][5] = 7;
-    std::cout << arr3[5][5] << " " << arr_[5][5] << std::endl;
+    std::cout << arr3[2][2] << " " << arr_[2][2] << std::endl;
+    std::cout << arr3(2, 2) << " " << arr_(2, 2) << std::endl;
 
-    std::cout << arr3.GetColumn(7).size() << " " << arr3.GetRow(3).size() << std::endl;
+    arr3(2, 2) = 5;
+    arr_(2, 2) = 7;
+    std::cout << arr3[2][2] << " " << arr_[2][2] << std::endl;
+    std::cout << arr3.GetColumn(2).size() << " " << arr3.GetRow(2).size() << std::endl;
+
+    for (const auto & x : arr_) {
+        for (const auto & y : x) {
+            std::cout << y << " ";
+        }
+        std::cout << std::endl;
+    }
 
 }
 

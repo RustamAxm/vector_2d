@@ -2,11 +2,22 @@
 
 #include <vector>
 #include <utility>
+#include <stdexcept>
 
 
 template <typename Type>
 class Vector2D {
 public:
+    using cols_it = std::vector< std::vector<Type> >::iterator;
+
+    cols_it begin() {
+        return vector2d_.begin();
+    }
+
+    cols_it end() {
+        return vector2d_.end();
+    }
+
     Vector2D() = default;
     explicit Vector2D(size_t m, size_t n) : cols_(m), rows_(n) {
 
@@ -54,6 +65,17 @@ public:
         return Proxy(vector2d_[index], index);
     }
 
+    Type& operator()(size_t x, size_t y) {
+        if (!isValidCol(x)) {
+            throw std::invalid_argument("out of range cols");
+        }
+
+        if (!isValidRow(y)) {
+            throw std::invalid_argument("out of range rows");
+        }
+        return vector2d_[x][y];
+    }
+
     Vector2D& operator=(const Vector2D& rhs) {
         if (this != &rhs) {
             Vector2D<Type> rhs_copy(rhs);
@@ -77,11 +99,20 @@ public:
         return *this;
     }
 
+
+
     std::vector<Type> GetColumn(size_t index) const {
+        if (!isValidCol(index)) {
+            throw std::invalid_argument("out of range cols");
+        }
         return vector2d_.at(index);
     }
 
     std::vector<Type> GetRow(size_t index) {
+        if (!isValidRow(index)) {
+            throw std::invalid_argument("out of range rows");
+        }
+
         std::vector<Type> to_return;
         for (size_t j = 0; j < rows_; ++j) {
             to_return.push_back(vector2d_.at(j).at(index));
@@ -98,6 +129,14 @@ public:
     }
 
 private:
+
+    bool isValidRow(const size_t index) const {
+        return index < rows_;
+    }
+
+    bool isValidCol(const size_t index) const {
+        return index < cols_;
+    }
 
     Vector2D<Type> copy(const Vector2D & other) {
         Vector2D tmp;
