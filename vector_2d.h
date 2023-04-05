@@ -77,7 +77,11 @@ public:
     }
 
     Vector2D& operator=(Vector2D && rhs) {
-        swap(rhs);
+        if (this != &rhs) {
+            vector2d_ = std::move(rhs.vector2d_);
+            rows_ = std::move(rhs.rows_);
+            cols_ = std::move(rhs.cols_);
+        }
         return *this;
     }
 
